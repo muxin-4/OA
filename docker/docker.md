@@ -2,8 +2,6 @@
 #### docker常用命令
 ![常用命令](./常用命令.png)
 
-
-
 #### 创建mysql镜像
 ```
 docker run -it -d --name emos-mysql -p 3307:3307 \
@@ -32,14 +30,21 @@ mongodb.conf
 ### 创建redis镜像
 
 #### 默认方式
-docker run -it -d --name redis -m 300m  -p 6379:6379 \
+```
+docker run -it -d --name emos-redis -m 300m  -p 6379:6379 \
 -e TZ=Asia/Shanghai \
 -v /Users/wgy/ALL/config/dockerData/emos-redis:/usr/local/etc/redis redis:6.0.10 \
 redis-server
+```
 
 todo 外部配置
 
 
 #### 创建RabbitMQ镜像
-
+```
+docker run -it -d --name emos-mq -m 300m \
+-p 4369:4369 -p 5672:5672 -p 15672:15672 -p 25672:25672 \
+-e TZ=Asia/Shanghai \
+rabbitmq:3.8.9
+```
 
