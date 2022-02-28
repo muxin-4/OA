@@ -57,7 +57,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "你自己的微信小程序APPID",
+        "appid" : "wx61f33ce7c6f9fba7",
         "setting" : {
             "urlCheck" : false
         },
@@ -79,5 +79,6 @@
     },
     "uniStatistics" : {
         "enable" : false
-    }
+    },
+    "miniprogramRoot" : "./unpackage/dist/dev/mp-weixin"
 }

@@ -4,3 +4,4 @@ dist-ssr
 *.local
 */node_modules
 emos-api/src/main/resources/application.yml
+emos-wx/.hbuilderx
