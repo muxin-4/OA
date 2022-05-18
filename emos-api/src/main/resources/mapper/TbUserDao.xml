@@ -69,5 +69,11 @@
           AND password = HEX(AES_ENCRYPT(#{password}, #{username}))
             LIMIT 1;
     </select>
+    <update id="updatePassword" parameterType="HashMap">
+        UPDATE tb_user
+        SET password = HEX(AES_ENCRYPT(#{newPassword}, username))
+        WHERE id = #{userId}
+          AND password = HEX(AES_ENCRYPT(#{password}, username))
+    </update>
 
 </mapper>

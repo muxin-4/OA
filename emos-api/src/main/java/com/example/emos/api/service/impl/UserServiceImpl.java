@@ -131,4 +131,11 @@ public class UserServiceImpl implements UserService {
         System.out.print(userId);
         return userId;
     }
+
+    @Override
+    public int updatePassword(HashMap param) {
+        int rows = userDao.updatePassword(param);
+        return rows;
+    }
+
 }
