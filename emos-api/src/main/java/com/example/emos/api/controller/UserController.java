@@ -4,8 +4,10 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.json.JSONUtil;
 import com.example.emos.api.common.util.R;
 import com.example.emos.api.controller.form.CheckQrCodeForm;
+import com.example.emos.api.controller.form.LoginForm;
 import com.example.emos.api.controller.form.SearchUserByIdForm;
 import com.example.emos.api.controller.form.WechatLoginForm;
 import com.example.emos.api.service.UserService;
@@ -90,5 +92,27 @@ public class UserController {
     public R searchAllUser() {
         ArrayList<HashMap> list = userService.searchAllUser();
         return R.ok().put("list", list);
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "登陆系统")
+    public R login(@Valid @RequestBody LoginForm form) {
+        HashMap param = JSONUtil.parse(form).toBean(HashMap.class);
+        Integer userId = userService.login(param);
+        System.out.print("userId");
+        System.out.print(userId);
+        R r = R.ok().put("result", userId != null ? true : false);
+        if (userId != null) {
+            StpUtil.setLoginId(userId);
+            Set<String> permissions = userService.searchUserPermissions(userId);
+            /*
+             * 因为新版的Chrome浏览器不支持前端Ajax的withCredentials，
+             * 导致Ajax无法提交Cookie，所以我们要取出生成的Token返回给前端，
+             * 让前端保存在Storage中，然后每次在Ajax的Header上提交Token
+             */
+            String token = StpUtil.getTokenInfo().getTokenValue();
+            r.put("permissions", permissions).put("token", token);
+        }
+        return r;
     }
 }

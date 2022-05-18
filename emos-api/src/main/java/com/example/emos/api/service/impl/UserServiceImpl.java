@@ -122,4 +122,13 @@ public class UserServiceImpl implements UserService {
         }
         return openId;
     }
+
+    @Override
+    public Integer login(HashMap param) {
+        Integer userId = userDao.login(param);
+        System.out.print(param);
+        System.out.print("userId1");
+        System.out.print(userId);
+        return userId;
+    }
 }
