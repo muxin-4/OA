@@ -7,6 +7,7 @@ import cn.hutool.extra.qrcode.QrConfig;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.example.emos.api.common.util.PageUtils;
 import com.example.emos.api.db.dao.TbUserDao;
 import com.example.emos.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +137,17 @@ public class UserServiceImpl implements UserService {
     public int updatePassword(HashMap param) {
         int rows = userDao.updatePassword(param);
         return rows;
+    }
+
+
+    @Override
+    public PageUtils searchUserByPage(HashMap param) {
+        ArrayList<HashMap> list = userDao.searchUserByPage(param);
+        long count = userDao.searchUserCount(param);
+        int start = (Integer) param.get("start");
+        int length = (Integer) param.get("length");
+        PageUtils pageUtils = new PageUtils(list, count, start, length);
+        return pageUtils;
     }
 
 }
